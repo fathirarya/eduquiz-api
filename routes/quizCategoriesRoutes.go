@@ -20,7 +20,6 @@ func QuizCategoriesRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validat
 	quizCategoryGroup.POST("", quizCategoryController.CreateQuizCategoryController)
 	quizCategoryGroup.GET("/:id", quizCategoryController.GetQuizCategoryByIdController)
 	quizCategoryGroup.GET("", quizCategoryController.GetAllQuizCategoryController)
-	quizCategoryGroup.GET("/:name", quizCategoryController.GetQuizCategoryByNameController)
 	quizCategoryGroup.DELETE("/:id", quizCategoryController.DeleteQuizCategoryController)
 
 }
