@@ -20,7 +20,7 @@ func QuizRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 	quizGroup.POST("", quizController.CreateQuizController)
 	quizGroup.GET("/:id", quizController.GetQuizByIdController)
 	quizGroup.GET("", quizController.GetAllQuizController)
-	quizGroup.GET("/:title", quizController.GetQuizByTitleController)
+	quizGroup.GET("/", quizController.GetQuizByTitleController)
 	quizGroup.PUT("/:id", quizController.UpdateQuizController)
 	quizGroup.DELETE("/:id", quizController.DeleteQuizController)
 
