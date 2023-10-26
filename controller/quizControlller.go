@@ -5,7 +5,6 @@ import (
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
 	"eduquiz-api/utils/res"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -37,8 +36,7 @@ func (c *QuizControllerImpl) CreateQuizController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.QuizService.CreateQuiz(ctx, QuizCreateRequest)
-	fmt.Println(result)
+	_, err = c.QuizService.CreateQuiz(ctx, QuizCreateRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -49,13 +47,10 @@ func (c *QuizControllerImpl) CreateQuizController(ctx echo.Context) error {
 			return ctx.JSON(http.StatusConflict, helper.ErrorResponse("Quiz Already Exist"))
 
 		}
-		fmt.Println(err)
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Quiz Error"))
 	}
 
-	response := res.QuizDomainToQuizResponse(result)
-
-	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Quiz", response))
+	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Quiz", nil))
 
 }
 
@@ -122,7 +117,7 @@ func (c *QuizControllerImpl) UpdateQuizController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.QuizService.UpdateQuiz(ctx, QuizUpdateRequest, quizIdInt)
+	_, err = c.QuizService.UpdateQuiz(ctx, QuizUpdateRequest, quizIdInt)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -134,12 +129,10 @@ func (c *QuizControllerImpl) UpdateQuizController(ctx echo.Context) error {
 
 		}
 
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Quiz Error"))
+		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Quiz Error Internal"))
 	}
 
-	response := res.QuizDomainToQuizResponse(result)
-
-	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Update Quiz", response))
+	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Update Quiz", nil))
 }
 
 func (c *QuizControllerImpl) DeleteQuizController(ctx echo.Context) error {
