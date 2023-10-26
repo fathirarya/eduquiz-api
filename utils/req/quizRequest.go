@@ -16,9 +16,8 @@ func QuizCreateRequestToQuizDomain(request web.QuizCreateRequest) *domain.Quiz {
 
 func QuizUpdateRequestToQuizDomain(request web.QuizUpdateRequest) *domain.Quiz {
 	return &domain.Quiz{
-		Title:          request.Title,
-		Description:    request.Description,
-		QuizCategoryID: request.QuizCategoryID,
+		Title:       request.Title,
+		Description: request.Description,
 	}
 }
 
