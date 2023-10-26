@@ -21,6 +21,7 @@ func QuizDomainToQuizResponse(quiz *domain.Quiz) *web.QuizResponse {
 		Title:          quiz.Title,
 		Description:    quiz.Description,
 		QuizCategoryID: quiz.QuizCategoryID,
+		QuizCategory:   quiz.QuizCategory,
 	}
 }
 
@@ -32,6 +33,7 @@ func ConvertQuizResponse(quizzes []domain.Quiz) []web.QuizResponse {
 			Title:          quiz.Title,
 			Description:    quiz.Description,
 			QuizCategoryID: quiz.QuizCategoryID,
+			QuizCategory:   quiz.QuizCategory,
 		}
 		results = append(results, quizResponse)
 	}
