@@ -4,6 +4,7 @@ import (
 	"eduquiz-api/model/domain"
 	"eduquiz-api/utils/req"
 	"eduquiz-api/utils/res"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -38,7 +39,7 @@ func (repository *QuizRepositoryImpl) Create(quiz *domain.Quiz) (*domain.Quiz, e
 }
 
 func (repository *QuizRepositoryImpl) Update(quiz *domain.Quiz, id int) (*domain.Quiz, error) {
-	result := repository.DB.Table("quiz").Where("id = ?", id).Updates(domain.Quiz{Title: quiz.Title, Description: quiz.Description})
+	result := repository.DB.Table("quizzes").Where("id = ?", id).Updates(domain.Quiz{Title: quiz.Title, Description: quiz.Description})
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -60,7 +61,8 @@ func (repository *QuizRepositoryImpl) FindByTitle(title string) (*domain.Quiz, e
 func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
 	quiz := domain.Quiz{}
 
-	result := repository.DB.First(&quiz, id)
+	result := repository.DB.Preload("QuizCategory").First(&quiz, id)
+	fmt.Println(result)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -71,7 +73,7 @@ func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
 func (repository *QuizRepositoryImpl) FindAll() ([]domain.Quiz, error) {
 	var quizzes []domain.Quiz
 
-	result := repository.DB.Find(&quizzes)
+	result := repository.DB.Preload("QuizCategory").Find(&quizzes)
 	if result.Error != nil {
 		return nil, result.Error
 	}
