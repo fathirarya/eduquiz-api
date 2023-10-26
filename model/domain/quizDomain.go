@@ -5,4 +5,5 @@ type Quiz struct {
 	Title          string
 	Description    string
 	QuizCategoryID uint
+	QuizCategory   QuizCategory
 }
