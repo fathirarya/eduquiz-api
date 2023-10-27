@@ -15,7 +15,6 @@ import (
 type QuizCategoryService interface {
 	CreateQuizCategory(ctx echo.Context, request web.QuizCategoryCreateRequest) (*domain.QuizCategory, error)
 	FindQuizCategoryById(ctx echo.Context, id int) (*domain.QuizCategory, error)
-	FindQuizCategoryByName(ctx echo.Context, name string) (*domain.QuizCategory, error)
 	FindAllQuizCategory(ctx echo.Context) ([]domain.QuizCategory, error)
 	DeleteQuizCategory(ctx echo.Context, id int) error
 }
@@ -55,16 +54,6 @@ func (service *QuizCategoryServiceImpl) CreateQuizCategory(ctx echo.Context, req
 func (service *QuizCategoryServiceImpl) FindQuizCategoryById(ctx echo.Context, id int) (*domain.QuizCategory, error) {
 
 	existingUser, _ := service.QuizCategoryRepository.FindById(id)
-	if existingUser == nil {
-		return nil, fmt.Errorf("Category Not Found")
-	}
-
-	return existingUser, nil
-}
-
-func (service *QuizCategoryServiceImpl) FindQuizCategoryByName(ctx echo.Context, name string) (*domain.QuizCategory, error) {
-
-	existingUser, _ := service.QuizCategoryRepository.FindByName(name)
 	if existingUser == nil {
 		return nil, fmt.Errorf("Category Not Found")
 	}
