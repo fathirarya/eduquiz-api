@@ -7,9 +7,9 @@ import (
 )
 
 type Users struct {
-	ID        uint           `gorm:"primary_key"`
-	CreatedAt time.Time      `gorm:"created_at"`
-	UpdatedAt time.Time      `gorm:"updated_at:milli"`
+	ID        uint           `gorm:"primaryKey"`
+	CreatedAt time.Time      `gorm:"autoCreateTime"`
+	UpdatedAt time.Time      `gorm:"autoUpdateTime:milli"`
 	DeleteAt  gorm.DeletedAt `gorm:"index"`
 	Username  string
 	Password  string
