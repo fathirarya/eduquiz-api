@@ -5,7 +5,7 @@ import (
 )
 
 type QuizCategory struct {
-	ID       uint           `gorm:"primarykey"`
+	ID       uint           `json:"id" gorm:"primarykey" `
 	DeleteAt gorm.DeletedAt `gorm:"index"`
-	Category string         `gorm:"type:varchar(255);not null"`
+	Category string         `json:"category" gorm:"type:varchar(255);not null"`
 }

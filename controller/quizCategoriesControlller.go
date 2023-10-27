@@ -34,7 +34,7 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.QuizCategoryService.CreateQuizCategory(ctx, quizCategoryCreateReq)
+	_, err = c.QuizCategoryService.CreateQuizCategory(ctx, quizCategoryCreateReq)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -48,8 +48,6 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Category Error"))
 	}
-
-	response := res.QuizCategoryDomainToQuizCategoryResponse(result)
 
 	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Category", response))
 
