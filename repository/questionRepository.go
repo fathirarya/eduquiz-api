@@ -60,22 +60,32 @@ func (repository *QuestionRepositoryImpl) FindByQuestion(question string) (*doma
 func (repository *QuestionRepositoryImpl) FindById(id int) (*domain.Question, error) {
 	var question domain.Question
 
-	result := repository.DB.Preload("Quiz").First(&question, id)
+	if err := repository.DB.First(&question, id).Error; err != nil {
+		return nil, err
+	}
+
+	query := `SELECT questions.*, quizzes.title AS title
+	FROM questions
+	INNER JOIN quizzes ON questions.quiz_id = quizzes.id
+	WHERE questions.id = ?`
+
+	result := repository.DB.Raw(query, id).Scan(&question)
+
 	if result.Error != nil {
 		return nil, result.Error
+
 	}
 
 	return &question, nil
 }
 
 func (repository *QuestionRepositoryImpl) FindAll() ([]domain.Question, error) {
-	var questions []domain.Question
+	questions := []domain.Question{}
+	query := `SELECT questions.*, quizzes.title AS title
+	FROM questions
+	INNER JOIN quizzes ON questions.quiz_id = quizzes.id`
 
-	if err := repository.DB.Find(&questions).Error; err != nil {
-		return nil, err
-	}
-
-	result := repository.DB.Preload("Quiz").Find(&questions)
+	result := repository.DB.Raw(query).Scan(&questions)
 
 	if result.Error != nil {
 		return nil, result.Error
