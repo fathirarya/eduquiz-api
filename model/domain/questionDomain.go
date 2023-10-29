@@ -9,4 +9,5 @@ type Question struct {
 	Option2  string
 	Option3  string
 	Option4  string
+	Title    string
 }
