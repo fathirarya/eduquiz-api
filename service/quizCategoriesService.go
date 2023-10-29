@@ -33,7 +33,7 @@ func NewQuizCategoryService(QuizCategoryRepository repository.QuizCategoryReposi
 
 func (service *QuizCategoryServiceImpl) CreateQuizCategory(ctx echo.Context, request web.QuizCategoryCreateRequest) (*domain.QuizCategory, error) {
 	err := service.Validate.Struct(request)
-	fmt.Println(err)
+
 	if err != nil {
 		return nil, helper.ValidationError(ctx, err)
 	}
@@ -41,6 +41,7 @@ func (service *QuizCategoryServiceImpl) CreateQuizCategory(ctx echo.Context, req
 	if existingQuizCategory != nil {
 		return nil, fmt.Errorf("Category Already Exist")
 	}
+	fmt.Println(request)
 	quizCategory := req.QuizCategoryCreateRequestToQuizCategoryDomain(request)
 	fmt.Println(quizCategory)
 	result, err := service.QuizCategoryRepository.Create(quizCategory)
