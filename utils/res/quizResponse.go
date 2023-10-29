@@ -9,19 +9,19 @@ import (
 func QuizSchemaToQuizDomain(quiz *schema.Quiz) *domain.Quiz {
 	return &domain.Quiz{
 		ID:             quiz.ID,
+		QuizCategoryID: quiz.QuizCategoryID,
 		Title:          quiz.Title,
 		Description:    quiz.Description,
-		QuizCategoryID: quiz.QuizCategoryID,
 	}
 }
 
-func QuizDomainToQuizResponse(quiz *domain.Quiz) *web.QuizResponse {
-	return &web.QuizResponse{
+func QuizDomainToQuizResponse(quiz *domain.Quiz) web.QuizResponse {
+	return web.QuizResponse{
 		ID:             quiz.ID,
+		QuizCategoryID: quiz.QuizCategoryID,
+		Category:       quiz.Category,
 		Title:          quiz.Title,
 		Description:    quiz.Description,
-		QuizCategoryID: quiz.QuizCategoryID,
-		QuizCategory:   quiz.QuizCategory,
 	}
 }
 
@@ -30,12 +30,22 @@ func ConvertQuizResponse(quizzes []domain.Quiz) []web.QuizResponse {
 	for _, quiz := range quizzes {
 		quizResponse := web.QuizResponse{
 			ID:             quiz.ID,
+			QuizCategoryID: quiz.QuizCategoryID,
+			Category:       quiz.Category,
 			Title:          quiz.Title,
 			Description:    quiz.Description,
-			QuizCategoryID: quiz.QuizCategoryID,
-			QuizCategory:   quiz.QuizCategory,
 		}
 		results = append(results, quizResponse)
 	}
 	return results
+}
+
+func FindQuizToQuizResponse(quiz *domain.Quiz) web.QuizResponse {
+	return web.QuizResponse{
+		ID:             quiz.ID,
+		QuizCategoryID: quiz.QuizCategoryID,
+		Category:       quiz.Category,
+		Title:          quiz.Title,
+		Description:    quiz.Description,
+	}
 }
