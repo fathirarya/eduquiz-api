@@ -42,6 +42,7 @@ func ConnectDB() *gorm.DB {
 	return DB
 }
 
+
 func Migrate() {
 	DB.AutoMigrate(schema.Student{}, schema.Teacher{}, schema.QuizCategory{}, schema.Quiz{}, schema.Question{}, schema.KeyAnswer{})
 }

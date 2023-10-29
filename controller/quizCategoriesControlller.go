@@ -5,7 +5,6 @@ import (
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
 	"eduquiz-api/utils/res"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -35,7 +34,7 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.QuizCategoryService.CreateQuizCategory(ctx, quizCategoryCreateReq)
+	_, err = c.QuizCategoryService.CreateQuizCategory(ctx, quizCategoryCreateReq)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -49,9 +48,12 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Category Error"))
 	}
-	fmt.Println(result)
+
+	
 	response := res.QuizCategoryDomainToQuizCategoryResponse(result)
-	fmt.Println(response)
+	
+
+
 	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Category", response))
 
 }

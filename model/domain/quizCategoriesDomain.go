@@ -1,6 +1,6 @@
 package domain
 
 type QuizCategory struct {
-	ID       uint
-	Category string
+	ID       uint   `json:"id"`
+	Category string `json:"category"`
 }
