@@ -5,6 +5,7 @@ import (
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
 	"eduquiz-api/utils/res"
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -48,9 +49,9 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Category Error"))
 	}
-
+	fmt.Println(result)
 	response := res.QuizCategoryDomainToQuizCategoryResponse(result)
-
+	fmt.Println(response)
 	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Category", response))
 
 }
