@@ -22,7 +22,7 @@ func QuestionDomainToQuestionResponse(question *domain.Question) *web.QuestionRe
 	return &web.QuestionResponse{
 		ID:       question.ID,
 		QuizID:   question.QuizID,
-		Quiz:     question.Quiz,
+		Title:    question.Title,
 		Question: question.Question,
 		Option1:  question.Option1,
 		Option2:  question.Option2,
@@ -37,7 +37,7 @@ func ConvertQuestionResponse(questions []domain.Question) []web.QuestionResponse
 		questionResponse := web.QuestionResponse{
 			ID:       question.ID,
 			QuizID:   question.QuizID,
-			Quiz:     question.Quiz,
+			Title:    question.Title,
 			Question: question.Question,
 			Option1:  question.Option1,
 			Option2:  question.Option2,
@@ -47,4 +47,17 @@ func ConvertQuestionResponse(questions []domain.Question) []web.QuestionResponse
 		results = append(results, questionResponse)
 	}
 	return results
+}
+
+func FindQuestionToQuestionResponse(question *domain.Question) *web.QuestionResponse {
+	return &web.QuestionResponse{
+		ID:       question.ID,
+		QuizID:   question.QuizID,
+		Title:    question.Title,
+		Question: question.Question,
+		Option1:  question.Option1,
+		Option2:  question.Option2,
+		Option3:  question.Option3,
+		Option4:  question.Option4,
+	}
 }
