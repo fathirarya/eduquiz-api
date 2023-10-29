@@ -99,7 +99,7 @@ func (c *QuestionControllerImpl) GetQuestionByIdController(ctx echo.Context) err
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Question Error"))
 	}
 
-	response := res.QuestionDomainToQuestionResponse(result)
+	response := res.FindQuestionToQuestionResponse(result)
 
 	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get Question Data By Id", response))
 }
