@@ -4,7 +4,6 @@ import (
 	"eduquiz-api/model/domain"
 	"eduquiz-api/utils/req"
 	"eduquiz-api/utils/res"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -59,10 +58,18 @@ func (repository *QuizRepositoryImpl) FindByTitle(title string) (*domain.Quiz, e
 }
 
 func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
-	quiz := domain.Quiz{}
+	var quiz domain.Quiz
 
-	result := repository.DB.Preload("QuizCategory").First(&quiz, id)
-	fmt.Println(result)
+	if err := repository.DB.First(&quiz, id).Error; err != nil {
+		return nil, err
+	}
+	query := `SELECT quizzes.*, quiz_categories.category AS category 
+	FROM quizzes 
+	JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id
+	WHERE quizzes.id = ?`
+
+	result := repository.DB.Raw(query, id).Scan(&quiz)
+
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -71,9 +78,12 @@ func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
 }
 
 func (repository *QuizRepositoryImpl) FindAll() ([]domain.Quiz, error) {
-	var quizzes []domain.Quiz
+	quizzes := []domain.Quiz{}
+	query := `SELECT *, quiz_categories.category as category 
+	FROM quizzes 
+	LEFT JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id`
 
-	result := repository.DB.Preload("QuizCategory").Find(&quizzes)
+	result := repository.DB.Raw(query).Scan(&quizzes)
 	if result.Error != nil {
 		return nil, result.Error
 	}
