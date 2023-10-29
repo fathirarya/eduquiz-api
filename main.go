@@ -20,10 +20,12 @@ func main() {
 		return c.String(http.StatusOK, "Welcome to EduQuiz API Services")
 	})
 
-	routes.UserRoutes(myApp, DB, validate)
+	routes.StudentRoutes(myApp, DB, validate)
+	routes.TeacherRoutes(myApp, DB, validate)
 	routes.QuizCategoriesRoutes(myApp, DB, validate)
 	routes.QuizRoutes(myApp, DB, validate)
 	routes.QuestionRoutes(myApp, DB, validate)
+	routes.KeyAnswerRoutes(myApp, DB, validate)
 
 	myApp.Pre(middleware.RemoveTrailingSlash())
 	myApp.Use(middleware.CORS())
