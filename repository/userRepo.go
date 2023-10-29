@@ -81,11 +81,11 @@ func (repository *UserRepositoryImpl) FindAll() ([]domain.Users, error) {
 	return user, nil
 }
 
-func (repository *UserRepositoryImpl) FindByUsername(name string) (*domain.Users, error) {
+func (repository *UserRepositoryImpl) FindByUsername(username string) (*domain.Users, error) {
 	user := domain.Users{}
 
 	// Menggunakan query LIKE yang tidak case-sensitive
-	result := repository.DB.Where("LOWER(name) LIKE LOWER(?)", "%"+name+"%").First(&user)
+	result := repository.DB.Where("LOWER(username) LIKE LOWER(?)", "%"+username+"%").First(&user)
 
 	if result.Error != nil {
 		return nil, result.Error

@@ -37,7 +37,7 @@ func (c *UserControllerImpl) RegisterUserController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.UserService.CreateUser(ctx, userCreateRequest)
+	_, err = c.UserService.CreateUser(ctx, userCreateRequest)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -52,9 +52,7 @@ func (c *UserControllerImpl) RegisterUserController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Sign Up Error"))
 	}
 
-	response := res.UserDomainToUserResponse(result)
-
-	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Sign Up", response))
+	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Sign Up", nil))
 }
 
 func (c *UserControllerImpl) LoginUserController(ctx echo.Context) error {
@@ -155,7 +153,7 @@ func (c *UserControllerImpl) UpdateUserController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	result, err := c.UserService.UpdateUser(ctx, userUpdateRequest, userIdInt)
+	_, err = c.UserService.UpdateUser(ctx, userUpdateRequest, userIdInt)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -168,9 +166,7 @@ func (c *UserControllerImpl) UpdateUserController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Update User Error"))
 	}
 
-	response := res.UserDomainToUserResponse(result)
-
-	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Updated User Data", response))
+	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Updated User Data", nil))
 }
 
 func (c *UserControllerImpl) DeleteUserController(ctx echo.Context) error {
