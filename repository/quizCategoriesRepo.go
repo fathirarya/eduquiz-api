@@ -33,6 +33,7 @@ func (repository *QuizCategoryRepositoryImpl) Create(quizCategory *domain.QuizCa
 		return nil, result.Error
 	}
 
+	fmt.Println(result)
 	results := res.QuizCategorySchemaToQuizCategoryDomain(quizCategoryDb)
 	fmt.Println(results)
 	return results, nil
