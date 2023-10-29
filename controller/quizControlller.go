@@ -82,7 +82,7 @@ func (c *QuizControllerImpl) GetQuizByIdController(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Quiz Error"))
 	}
 
-	response := res.QuizDomainToQuizResponse(result)
+	response := res.FindQuizToQuizResponse(result)
 
 	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get Quiz", response))
 }
