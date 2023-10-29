@@ -1,10 +1,9 @@
 package domain
 
-type Users struct {
+type Teacher struct {
 	ID       uint
 	Username string
 	Password string
 	Email    string
 	Fullname string
-	Roles    string
 }
