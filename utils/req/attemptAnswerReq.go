@@ -8,6 +8,8 @@ import (
 
 func AttemptAnswerCreateRequestToAttemptAnswerDomain(request web.AttemptAnswerCreateReq) *domain.AttemptAnswer {
 	return &domain.AttemptAnswer{
+		StudentID:  request.StudentID,
+		QuizID:     request.QuizID,
 		QuestionID: request.QuestionID,
 		Answer:     request.Answer,
 	}
@@ -15,6 +17,8 @@ func AttemptAnswerCreateRequestToAttemptAnswerDomain(request web.AttemptAnswerCr
 
 func AttemptAnswerDomainToAttemptAnswerSchema(attemptAnswer domain.AttemptAnswer) *schema.AttemptAnswer {
 	return &schema.AttemptAnswer{
+		StudentID:  attemptAnswer.StudentID,
+		QuizID:     attemptAnswer.QuizID,
 		QuestionID: attemptAnswer.QuestionID,
 		Answer:     attemptAnswer.Answer,
 	}
