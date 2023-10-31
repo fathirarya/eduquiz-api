@@ -2,8 +2,6 @@ package repository
 
 import (
 	"eduquiz-api/model/domain"
-	"eduquiz-api/utils/req"
-	"eduquiz-api/utils/res"
 
 	"gorm.io/gorm"
 )
@@ -21,13 +19,10 @@ func NewQuizResultRepository(DB *gorm.DB) QuizResultRepository {
 }
 
 func (repository *QuizResultRepositoryImpl) PostResult(quizResult *domain.QuizResult) (*domain.QuizResult, error) {
-	quizResultDb := req.QuizResultDomainToQuizResultSchema(*quizResult)
-	result := repository.DB.Create(&quizResultDb)
+	result := repository.DB.Create(&quizResult)
 	if result.Error != nil {
 		return nil, result.Error
 	}
 
-	results := res.QuizResultSchemaToQuizResultDomain(quizResultDb)
-
-	return results, nil
+	return quizResult, nil
 }
