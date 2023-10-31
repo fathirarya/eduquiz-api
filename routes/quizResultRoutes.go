@@ -4,11 +4,13 @@ import (
 	"eduquiz-api/controller"
 	"eduquiz-api/repository"
 	"eduquiz-api/service"
+	"eduquiz-api/utils/helper/middleware"
 	"os"
 
 	"github.com/go-playground/validator"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
+
 	"gorm.io/gorm"
 )
 
@@ -26,5 +28,5 @@ func QuizResultRoutes(e *echo.Echo, DB *gorm.DB, validate *validator.Validate) {
 
 	quizResult.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	quizResult.POST("", quizResultController.CreateQuizResultController)
+	quizResult.POST("", quizResultController.CreateQuizResultController, middleware.AuthMiddleware("Student"))
 }
