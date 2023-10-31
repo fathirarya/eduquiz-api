@@ -42,9 +42,11 @@ func (repository *AttemptAnswerRepositoryImpl) FindById(id int) (*domain.Attempt
 		return nil, err
 	}
 
-	query := `SELECT *, questions.question AS quest
+	query := `SELECT attempt_answers.*, 
 	FROM attempt_answers
-	INNER JOIN questions ON attempt_answers.question_id = questions.id
+	LEFT JOIN questions ON attempt_answers.question_id = questions.id
+	LEFT JOIN students ON attempt_answers.student_id = students.id\
+	LEFT JOIN quizzes ON attempt_answers.quiz_id = quizzes.id
 	WHERE attempt_answers.id = ?`
 
 	result := repository.DB.Raw(query, id).Scan(&questionDb)
@@ -62,7 +64,9 @@ func (repository *AttemptAnswerRepositoryImpl) FindAll() ([]domain.AttemptAnswer
 
 	query := `SELECT attempt_answers.*, questions.question AS quest
 	FROM attempt_answers
-	INNER JOIN questions ON attempt_answers.question_id = questions.id`
+	LEFT JOIN questions ON attempt_answers.question_id = questions.id
+	LEFT JOIN students ON attempt_answers.student_id = students.id
+	LEFT JOIN quizzes ON attempt_answers.quiz_id = quizzes.id`
 
 	result := repository.DB.Raw(query).Scan(&attemptAnswers)
 
