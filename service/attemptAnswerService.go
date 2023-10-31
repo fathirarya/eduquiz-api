@@ -46,7 +46,7 @@ func (service *AttemptAnswerServiceImpl) CreateAttemptAnswer(ctx echo.Context, r
 		attemptAnswer.IsCorrect = false
 	}
 	result, err := service.AttemptAnswerRepository.PostAnswer(attemptAnswer)
-	fmt.Println(result)
+
 	if err != nil {
 		return nil, err
 	}
