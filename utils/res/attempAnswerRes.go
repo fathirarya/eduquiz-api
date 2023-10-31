@@ -9,6 +9,8 @@ import (
 func AttemptAnswerSchemaToAttemptAnswerDomain(attemptAnswer *schema.AttemptAnswer) *domain.AttemptAnswer {
 	return &domain.AttemptAnswer{
 		ID:         attemptAnswer.ID,
+		StudentID:  attemptAnswer.StudentID,
+		QuizID:     attemptAnswer.QuizID,
 		QuestionID: attemptAnswer.QuestionID,
 		Answer:     attemptAnswer.Answer,
 		IsCorrect:  attemptAnswer.IsCorrect,
@@ -18,10 +20,11 @@ func AttemptAnswerSchemaToAttemptAnswerDomain(attemptAnswer *schema.AttemptAnswe
 func AttemptAnswerDomainToAttemptAnswerResponse(attemptAnswer *domain.AttemptAnswer) *web.AttemptAnswerResponse {
 	return &web.AttemptAnswerResponse{
 		ID:         attemptAnswer.ID,
+		StudentID:  attemptAnswer.StudentID,
+		QuizID:     attemptAnswer.QuizID,
 		QuestionID: attemptAnswer.QuestionID,
-		// Quest:      attemptAnswer.Quest,
-		Answer:    attemptAnswer.Answer,
-		IsCorrect: attemptAnswer.IsCorrect,
+		Answer:     attemptAnswer.Answer,
+		IsCorrect:  attemptAnswer.IsCorrect,
 	}
 }
 
@@ -30,10 +33,11 @@ func ConvertAttemptAnswerResponse(attemptAnswers []domain.AttemptAnswer) []web.A
 	for _, attemptAnswer := range attemptAnswers {
 		attemptAnswerResponse := web.AttemptAnswerResponse{
 			ID:         attemptAnswer.ID,
+			StudentID:  attemptAnswer.StudentID,
+			QuizID:     attemptAnswer.QuizID,
 			QuestionID: attemptAnswer.QuestionID,
-			// Quest:      attemptAnswer.Quest,
-			Answer:    attemptAnswer.Answer,
-			IsCorrect: attemptAnswer.IsCorrect,
+			Answer:     attemptAnswer.Answer,
+			IsCorrect:  attemptAnswer.IsCorrect,
 		}
 		results = append(results, attemptAnswerResponse)
 	}
@@ -43,9 +47,10 @@ func ConvertAttemptAnswerResponse(attemptAnswers []domain.AttemptAnswer) []web.A
 func FindAttemptAnswerDomainToAttemptAnswerResponse(attemptAnswer *domain.AttemptAnswer) *web.AttemptAnswerResponse {
 	return &web.AttemptAnswerResponse{
 		ID:         attemptAnswer.ID,
+		StudentID:  attemptAnswer.StudentID,
+		QuizID:     attemptAnswer.QuizID,
 		QuestionID: attemptAnswer.QuestionID,
-		// Quest:      attemptAnswer.Quest,
-		Answer:    attemptAnswer.Answer,
-		IsCorrect: attemptAnswer.IsCorrect,
+		Answer:     attemptAnswer.Answer,
+		IsCorrect:  attemptAnswer.IsCorrect,
 	}
 }
