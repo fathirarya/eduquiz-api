@@ -12,6 +12,7 @@ type AttemptAnswerRepository interface {
 	PostAnswer(attemptAnswer *domain.AttemptAnswer) (*domain.AttemptAnswer, error)
 	FindById(questionId int) (*domain.AttemptAnswer, error)
 	FindAll() ([]domain.AttemptAnswer, error)
+	FindByStudentId(studentId int) ([]domain.AttemptAnswer, error)
 }
 
 type AttemptAnswerRepositoryImpl struct {
@@ -69,6 +70,26 @@ func (repository *AttemptAnswerRepositoryImpl) FindAll() ([]domain.AttemptAnswer
 	LEFT JOIN quizzes ON attempt_answers.quiz_id = quizzes.id`
 
 	result := repository.DB.Raw(query).Scan(&attemptAnswers)
+
+	if result.Error != nil {
+		return nil, result.Error
+
+	}
+
+	return attemptAnswers, nil
+}
+
+func (repository *AttemptAnswerRepositoryImpl) FindByStudentId(studentId int) ([]domain.AttemptAnswer, error) {
+	var attemptAnswers []domain.AttemptAnswer
+
+	query := `SELECT attempt_answers.*, questions.question AS quest
+	FROM attempt_answers
+	LEFT JOIN questions ON attempt_answers.question_id = questions.id
+	LEFT JOIN students ON attempt_answers.student_id = students.id
+	LEFT JOIN quizzes ON attempt_answers.quiz_id = quizzes.id
+	WHERE attempt_answers.student_id = ?`
+
+	result := repository.DB.Raw(query, studentId).Scan(&attemptAnswers)
 
 	if result.Error != nil {
 		return nil, result.Error
