@@ -4,6 +4,9 @@ import (
 	"eduquiz-api/config"
 	"eduquiz-api/routes"
 	"net/http"
+"log"
+	"os"
+
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -13,6 +16,15 @@ import (
 func main() {
 	myApp := echo.New()
 	validate := validator.New()
+
+_, err := os.Stat(".env")
+	if err == nil {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatal("Failed to fetch .env file")
+		}
+	}
+
 
 	DB := config.ConnectDB()
 
