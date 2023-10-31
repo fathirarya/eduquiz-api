@@ -25,10 +25,9 @@ func StudentRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 
 	studentsGroup.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	studentsGroup.GET("/:id", studentController.GetStudentController, middleware.AuthMiddleware("Siswa"))
-	studentsGroup.GET("", studentController.GetStudentsController, middleware.AuthMiddleware("Siswa"))
-	studentsGroup.GET("/:name", studentController.GetStudentByNameController, middleware.AuthMiddleware("Siswa"))
-	studentsGroup.PUT("/:id", studentController.UpdateStudentController, middleware.AuthMiddleware("Siswa"))
-	studentsGroup.DELETE("/:id", studentController.DeleteStudentController, middleware.AuthMiddleware("Siswa"))
+	studentsGroup.GET("/:id", studentController.GetStudentController, middleware.AuthMiddleware("Student"))
+	studentsGroup.GET("", studentController.GetStudentsController, middleware.AuthMiddleware("Teacher"))
+	studentsGroup.PUT("/:id", studentController.UpdateStudentController, middleware.AuthMiddleware("Student"))
+	studentsGroup.DELETE("/:id", studentController.DeleteStudentController, middleware.AuthMiddleware("Student"))
 
 }
