@@ -4,9 +4,9 @@ import (
 	"eduquiz-api/config"
 	"eduquiz-api/routes"
 	"net/http"
-"log"
+        "log"
 	"os"
-
+        "github.com/joho/godotenv"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
