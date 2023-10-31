@@ -3,22 +3,16 @@ package config
 import (
 	"eduquiz-api/model/schema"
 	"fmt"
+	"log"
 	"os"
-	"path/filepath"
 
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
-func ConnectDB() *gorm.DB {
-	err := godotenv.Load(filepath.Join(".", ".env"))
-	if err != nil {
-		fmt.Println("Error loading .env file")
-		os.Exit(1)
-	}
+func ConnectDB() {
 
 	dbUser := os.Getenv("DB_USERNAME")
 	dbPass := os.Getenv("DB_PASSWORD")
@@ -32,19 +26,18 @@ func ConnectDB() *gorm.DB {
 	var errDB error
 	DB, errDB = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if errDB != nil {
-		panic("Failed to Connect Database")
+		log.Fatal("Failed to Connect Database")
 	}
-
-	Migrate()
 
 	fmt.Println("Connected to Database")
 
-	return DB
 }
 
-
 func Migrate() {
-	DB.AutoMigrate(
-		schema.Student{}, schema.Teacher{}, schema.QuizCategory{}, schema.Quiz{}, schema.Question{}, schema.KeyAnswer{}, schema.AttemptAnswer{}, schema.QuizResult{},
-	)
+
+	err := DB.AutoMigrate(&schema.Student{}, &schema.Teacher{}, &schema.QuizCategory{}, &schema.Quiz{}, &schema.Question{}, &schema.KeyAnswer{}, &schema.AttemptAnswer{}, &schema.QuizResult{})
+	if err != nil {
+		log.Fatal("Failed to Migrate Database")
+	}
+	fmt.Println("Success Migrate Database")
 }
