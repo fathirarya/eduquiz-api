@@ -5,7 +5,9 @@ import (
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
 	"eduquiz-api/utils/res"
+	"fmt"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -19,6 +21,7 @@ type QuizController interface {
 	GetAllQuizController(ctx echo.Context) error
 	UpdateQuizController(ctx echo.Context) error
 	DeleteQuizController(ctx echo.Context) error
+	ImplementOpenAiController(ctx echo.Context) error
 }
 
 type QuizControllerImpl struct {
@@ -152,4 +155,20 @@ func (c *QuizControllerImpl) DeleteQuizController(ctx echo.Context) error {
 	}
 
 	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Delete Quiz", nil))
+}
+
+func (c *QuizControllerImpl) ImplementOpenAiController(ctx echo.Context) error {
+	ImplementOpenAiRequest := web.ImplementationOpenAiRequest{}
+	err := ctx.Bind(&ImplementOpenAiRequest)
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
+	}
+	fmt.Println(ImplementOpenAiRequest)
+	ImplementOpenAiResponse, err := helper.DiagnosticAI(ImplementOpenAiRequest.InputMessage, os.Getenv("OPEN_API_KEY"))
+	fmt.Println(ImplementOpenAiResponse)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Implement Open Ai Error: "+err.Error()))
+	}
+
+	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Implement Open Ai", ImplementOpenAiResponse))
 }
