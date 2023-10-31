@@ -54,7 +54,7 @@ func (repository *KeyAnswerRepositoryImpl) FindById(id int) (*domain.KeyAnswer, 
 
 	query := `SELECT key_answers.*, questions.question AS questions
 	FROM key_answers
-	INNER JOIN questions ON key_answers.question_id = questions.id
+	LEFT JOIN questions ON key_answers.question_id = questions.id
 	WHERE key_answers.id = ?`
 
 	result := repository.DB.Raw(query, id).Scan(&keyAnswer)
