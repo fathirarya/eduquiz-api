@@ -11,6 +11,7 @@ func QuizCreateRequestToQuizDomain(request web.QuizCreateRequest) *domain.Quiz {
 		Title:          request.Title,
 		Description:    request.Description,
 		QuizCategoryID: request.QuizCategoryID,
+		TeacherID:      request.TeacherID,
 	}
 }
 
@@ -26,5 +27,12 @@ func QuizDomainToQuizSchema(quiz domain.Quiz) *schema.Quiz {
 		Title:          quiz.Title,
 		Description:    quiz.Description,
 		QuizCategoryID: quiz.QuizCategoryID,
+		TeacherID:      quiz.TeacherID,
+	}
+}
+
+func ImplementationOpenAiRequestToImplementationOpenAiDomain(request web.ImplementationOpenAiRequest) *domain.OpenAi {
+	return &domain.OpenAi{
+		InputMessage: request.InputMessage,
 	}
 }
