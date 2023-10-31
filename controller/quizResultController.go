@@ -4,6 +4,7 @@ import (
 	"eduquiz-api/model/web"
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
+	"eduquiz-api/utils/res"
 	"net/http"
 	"strings"
 
@@ -33,7 +34,7 @@ func (c *QuizResultControllerImpl) CreateQuizResultController(ctx echo.Context) 
 		return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Client Input"))
 	}
 
-	_, err = c.QuizResultService.PostResult(ctx, quizResultReq)
+	quizResults, err := c.QuizResultService.PostResult(ctx, quizResultReq)
 	if err != nil {
 		if strings.Contains(err.Error(), "Validation failed") {
 			return ctx.JSON(http.StatusBadRequest, helper.ErrorResponse("Invalid Validation"))
@@ -48,6 +49,8 @@ func (c *QuizResultControllerImpl) CreateQuizResultController(ctx echo.Context) 
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Question Error"))
 	}
 
-	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Question", nil))
+	response := res.QuizResultDomainToQuizResultResponse(quizResults)
+
+	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Question", response))
 
 }
