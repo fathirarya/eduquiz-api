@@ -17,9 +17,7 @@ func QuizResultSchemaToQuizResultDomain(quizResult *schema.QuizResult) *domain.Q
 func QuizResultDomainToQuizResultResponse(quizResult *domain.QuizResult) web.QuizResultResponse {
 	return web.QuizResultResponse{
 		StudentID: quizResult.StudentID,
-		FullName:  quizResult.FullName,
 		QuizID:    quizResult.QuizID,
-		Title:     quizResult.Title,
 		Score:     quizResult.Score,
 	}
 }
@@ -29,9 +27,7 @@ func ConvertQuizResultResponse(quizResults []domain.QuizResult) []web.QuizResult
 	for _, quizResult := range quizResults {
 		quizResultResponse := web.QuizResultResponse{
 			StudentID: quizResult.StudentID,
-			FullName:  quizResult.FullName,
 			QuizID:    quizResult.QuizID,
-			Title:     quizResult.Title,
 			Score:     quizResult.Score,
 		}
 		results = append(results, quizResultResponse)
