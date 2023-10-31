@@ -22,10 +22,10 @@ func KeyAnswerRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 
 	keyAnswerGroup.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	keyAnswerGroup.POST("", keyAnswerController.CreateKeyAnswerController, middleware.AuthMiddleware("Guru"))
-	keyAnswerGroup.GET("/:id", keyAnswerController.GetKeyAnswerByIdController, middleware.AuthMiddleware("Guru"))
-	keyAnswerGroup.GET("", keyAnswerController.GetAllKeyAnswerController, middleware.AuthMiddleware("Guru"))
-	keyAnswerGroup.PUT("/:id", keyAnswerController.UpdateKeyAnswerController, middleware.AuthMiddleware("Guru"))
-	keyAnswerGroup.DELETE("/:id", keyAnswerController.DeleteKeyAnswerController, middleware.AuthMiddleware("Guru"))
+	keyAnswerGroup.POST("", keyAnswerController.CreateKeyAnswerController, middleware.AuthMiddleware("Teacher"))
+	keyAnswerGroup.GET("/:id", keyAnswerController.GetKeyAnswerByIdController, middleware.AuthMiddleware("Teacher"))
+	keyAnswerGroup.GET("", keyAnswerController.GetAllKeyAnswerController, middleware.AuthMiddleware("Teacher"))
+	keyAnswerGroup.PUT("/:id", keyAnswerController.UpdateKeyAnswerController, middleware.AuthMiddleware("Teacher"))
+	keyAnswerGroup.DELETE("/:id", keyAnswerController.DeleteKeyAnswerController, middleware.AuthMiddleware("Teacher"))
 
 }
