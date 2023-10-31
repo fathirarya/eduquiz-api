@@ -45,7 +45,7 @@ func (repository *AttemptAnswerRepositoryImpl) FindById(id int) (*domain.Attempt
 	query := `SELECT attempt_answers.*, 
 	FROM attempt_answers
 	LEFT JOIN questions ON attempt_answers.question_id = questions.id
-	LEFT JOIN students ON attempt_answers.student_id = students.id\
+	LEFT JOIN students ON attempt_answers.student_id = students.id
 	LEFT JOIN quizzes ON attempt_answers.quiz_id = quizzes.id
 	WHERE attempt_answers.id = ?`
 
