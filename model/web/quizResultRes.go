@@ -6,5 +6,5 @@ type QuizResultResponse struct {
 	FullName  string `json:"full_name"`
 	QuizID    uint   `json:"quiz_id"`
 	Title     string `json:"title"`
-	Score     uint   `json:"score"`
+	Score     int    `json:"score"`
 }
