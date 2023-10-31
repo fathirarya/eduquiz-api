@@ -49,7 +49,9 @@ func (c *QuizCategoryControllerImpl) CreateQuizCategoryController(ctx echo.Conte
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Category Error"))
 	}
 
+
 	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Category", nil))
+
 
 }
 
