@@ -6,7 +6,5 @@ type QuizResult struct {
 	Student   Student
 	QuizID    uint
 	Quiz      Quiz
-	Score     uint
-	FullName  string
-	Title     string
+	Score     int
 }
