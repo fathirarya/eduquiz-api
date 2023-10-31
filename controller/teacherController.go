@@ -79,7 +79,7 @@ func (c *TeacherControllerImpl) LoginTeacherController(ctx echo.Context) error {
 
 	teacherLoginResponse := res.TeacherDomainToTeacherLoginResponse(response)
 
-	token, err := middleware.GenerateTokenGuru(response.ID)
+	token, err := middleware.GenerateTokenTeacher(response.ID)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Generate JWT Error"))
 	}
