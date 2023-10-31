@@ -28,5 +28,6 @@ func QuizRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 	quizGroup.GET("/", quizController.GetQuizByTitleController, middleware.AuthMiddleware("Teacher"))
 	quizGroup.PUT("/:id", quizController.UpdateQuizController, middleware.AuthMiddleware("Teacher"))
 	quizGroup.DELETE("/:id", quizController.DeleteQuizController, middleware.AuthMiddleware("Teacher"))
+	quizGroup.POST("/eduquizai", quizController.ImplementOpenAiController, middleware.AuthMiddleware("Student"))
 
 }
