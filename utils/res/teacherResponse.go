@@ -18,10 +18,12 @@ func TeacherSchemaToTeacherDomain(teacher *schema.Teacher) *domain.Teacher {
 
 func TeacherDomainToTeacherResponse(teacher *domain.Teacher) web.TeacherResponse {
 	return web.TeacherResponse{
-		ID:       teacher.ID,
-		Username: teacher.Username,
-		Email:    teacher.Email,
-		Fullname: teacher.Fullname,
+		ID:        teacher.ID,
+		CreatedAt: teacher.CreatedAt,
+		UpdatedAt: teacher.UpdatedAt,
+		Username:  teacher.Username,
+		Email:     teacher.Email,
+		Fullname:  teacher.Fullname,
 	}
 }
 
@@ -36,10 +38,12 @@ func ConvertTeacherResponse(teachers []domain.Teacher) []web.TeacherResponse {
 	var results []web.TeacherResponse
 	for _, teacher := range teachers {
 		teacherResponse := web.TeacherResponse{
-			ID:       teacher.ID,
-			Username: teacher.Username,
-			Email:    teacher.Email,
-			Fullname: teacher.Fullname,
+			ID:        teacher.ID,
+			CreatedAt: teacher.CreatedAt,
+			UpdatedAt: teacher.UpdatedAt,
+			Username:  teacher.Username,
+			Email:     teacher.Email,
+			Fullname:  teacher.Fullname,
 		}
 		results = append(results, teacherResponse)
 	}
