@@ -3,10 +3,11 @@ package main
 import (
 	"eduquiz-api/config"
 	"eduquiz-api/routes"
+	"log"
 	"net/http"
-        "log"
 	"os"
-        "github.com/joho/godotenv"
+
+	"github.com/joho/godotenv"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -17,29 +18,28 @@ func main() {
 	myApp := echo.New()
 	validate := validator.New()
 
-_, err := os.Stat(".env")
+	_, err := os.Stat(".env")
 	if err == nil {
 		err := godotenv.Load()
 		if err != nil {
 			log.Fatal("Failed to fetch .env file")
 		}
 	}
-
-
-	DB := config.ConnectDB()
+	config.ConnectDB()
+	config.Migrate()
 
 	myApp.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Welcome to EduQuiz API Services")
 	})
 
-	routes.StudentRoutes(myApp, DB, validate)
-	routes.TeacherRoutes(myApp, DB, validate)
-	routes.QuizCategoriesRoutes(myApp, DB, validate)
-	routes.QuizRoutes(myApp, DB, validate)
-	routes.QuestionRoutes(myApp, DB, validate)
-	routes.KeyAnswerRoutes(myApp, DB, validate)
-	routes.AttemptAnswerRoutes(myApp, DB, validate)
-	routes.QuizResultRoutes(myApp, DB, validate)
+	routes.StudentRoutes(myApp, config.DB, validate)
+	routes.TeacherRoutes(myApp, config.DB, validate)
+	routes.QuizCategoriesRoutes(myApp, config.DB, validate)
+	routes.QuizRoutes(myApp, config.DB, validate)
+	routes.QuestionRoutes(myApp, config.DB, validate)
+	routes.KeyAnswerRoutes(myApp, config.DB, validate)
+	routes.AttemptAnswerRoutes(myApp, config.DB, validate)
+	routes.QuizResultRoutes(myApp, config.DB, validate)
 
 	myApp.Pre(middleware.RemoveTrailingSlash())
 	myApp.Use(middleware.CORS())
