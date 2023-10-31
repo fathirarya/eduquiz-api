@@ -15,4 +15,5 @@ type Teacher struct {
 	Password  string
 	Email     string
 	Fullname  string
+	Quiz      []Quiz `gorm:"foreignKey:TeacherID"`
 }
