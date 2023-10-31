@@ -24,10 +24,10 @@ func TeacherRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 
 	teachersGroup.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	teachersGroup.GET("/:id", teacherController.GetTeacherController, middleware.AuthMiddleware("Guru"))
-	teachersGroup.GET("", teacherController.GetTeachersController, middleware.AuthMiddleware("Guru"))
-	teachersGroup.GET("/:name", teacherController.GetTeacherByNameController, middleware.AuthMiddleware("Guru"))
-	teachersGroup.PUT("/:id", teacherController.UpdateTeacherController, middleware.AuthMiddleware("Guru"))
-	teachersGroup.DELETE("/:id", teacherController.DeleteTeacherController, middleware.AuthMiddleware("Guru"))
+	teachersGroup.GET("/:id", teacherController.GetTeacherController, middleware.AuthMiddleware("Teacher"))
+	teachersGroup.GET("", teacherController.GetTeachersController, middleware.AuthMiddleware("Teacher"))
+	teachersGroup.GET("/:name", teacherController.GetTeacherByNameController, middleware.AuthMiddleware("Teacher"))
+	teachersGroup.PUT("/:id", teacherController.UpdateTeacherController, middleware.AuthMiddleware("Teacher"))
+	teachersGroup.DELETE("/:id", teacherController.DeleteTeacherController, middleware.AuthMiddleware("Teacher"))
 
 }
