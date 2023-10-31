@@ -73,7 +73,8 @@ func (repository *StudentRepositoryImpl) FindByEmail(email string) (*domain.Stud
 func (repository *StudentRepositoryImpl) FindAll() ([]domain.Student, error) {
 	student := []domain.Student{}
 
-	result := repository.DB.Find(&student)
+	query := `SELECT * FROM students WHERE delete_at IS NULL`
+	result := repository.DB.Raw(query).Scan(&student)
 	if result.Error != nil {
 		return nil, result.Error
 	}
