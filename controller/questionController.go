@@ -5,7 +5,6 @@ import (
 	"eduquiz-api/service"
 	"eduquiz-api/utils/helper"
 	"eduquiz-api/utils/res"
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -47,7 +46,7 @@ func (c *QuestionControllerImpl) CreateQuestionController(ctx echo.Context) erro
 			return ctx.JSON(http.StatusConflict, helper.ErrorResponse("Question Already Exist"))
 
 		}
-		fmt.Println(err)
+
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Question Error"))
 	}
 
