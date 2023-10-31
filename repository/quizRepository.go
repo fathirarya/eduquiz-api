@@ -63,10 +63,11 @@ func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
 	if err := repository.DB.First(&quiz, id).Error; err != nil {
 		return nil, err
 	}
-	query := `SELECT quizzes.*, quiz_categories.category AS category 
+	query := `SELECT quizzes.*, quiz_categories.category AS category, teachers.fullname AS full_name
 	FROM quizzes 
-	JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id
-	WHERE quizzes.id = ?`
+	LEFT JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id
+	LEFT JOIN teachers ON quizzes.teacher_id = teachers.id
+	WHERE quizzes.id = ? AND quizzes.deleted_at IS NULL`
 
 	result := repository.DB.Raw(query, id).Scan(&quiz)
 
@@ -79,9 +80,11 @@ func (repository *QuizRepositoryImpl) FindById(id int) (*domain.Quiz, error) {
 
 func (repository *QuizRepositoryImpl) FindAll() ([]domain.Quiz, error) {
 	quizzes := []domain.Quiz{}
-	query := `SELECT *, quiz_categories.category as category 
+	query := `SELECT *, quiz_categories.category AS category, teachers.fullname AS full_name
 	FROM quizzes 
-	LEFT JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id`
+	LEFT JOIN quiz_categories ON quizzes.quiz_category_id = quiz_categories.id
+	LEFT JOIN teachers ON quizzes.teacher_id = teachers.id
+	WHERE quizzes.deleted_at IS NULL`
 
 	result := repository.DB.Raw(query).Scan(&quizzes)
 	if result.Error != nil {

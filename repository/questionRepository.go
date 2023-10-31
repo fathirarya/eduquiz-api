@@ -13,6 +13,7 @@ type QuestionRepository interface {
 	Update(question *domain.Question, id int) (*domain.Question, error)
 	FindByQuestion(question string) (*domain.Question, error)
 	FindById(id int) (*domain.Question, error)
+	FindByQuizId(quizId int) ([]domain.Question, error)
 	FindAll() ([]domain.Question, error)
 	Delete(id int) error
 }
@@ -77,6 +78,23 @@ func (repository *QuestionRepositoryImpl) FindById(id int) (*domain.Question, er
 	}
 
 	return &question, nil
+}
+
+func (repository *QuestionRepositoryImpl) FindByQuizId(quizId int) ([]domain.Question, error) {
+	questions := []domain.Question{}
+
+	query := `SELECT questions.*, quizzes.title AS title
+	FROM questions
+	INNER JOIN quizzes ON questions.quiz_id = quizzes.id
+	WHERE questions.quiz_id = ?`
+
+	result := repository.DB.Raw(query, quizId).Scan(&questions)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
+
+	return questions, nil
 }
 
 func (repository *QuestionRepositoryImpl) FindAll() ([]domain.Question, error) {

@@ -27,6 +27,7 @@ func main() {
 	routes.QuestionRoutes(myApp, DB, validate)
 	routes.KeyAnswerRoutes(myApp, DB, validate)
 	routes.AttemptAnswerRoutes(myApp, DB, validate)
+	routes.QuizResultRoutes(myApp, DB, validate)
 
 	myApp.Pre(middleware.RemoveTrailingSlash())
 	myApp.Use(middleware.CORS())
