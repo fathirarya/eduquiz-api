@@ -5,7 +5,6 @@ import (
 	"eduquiz-api/model/schema"
 	"eduquiz-api/utils/req"
 	"eduquiz-api/utils/res"
-	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -33,9 +32,8 @@ func (repository *QuizCategoryRepositoryImpl) Create(quizCategory *domain.QuizCa
 		return nil, result.Error
 	}
 
-	fmt.Println(result)
 	results := res.QuizCategorySchemaToQuizCategoryDomain(quizCategoryDb)
-	fmt.Println(results)
+
 	return results, nil
 }
 

@@ -21,10 +21,10 @@ func QuestionRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 	questionGroup := e.Group("api/v1/question")
 	questionGroup.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	questionGroup.POST("", questionController.CreateQuestionController, middleware.AuthMiddleware("Guru"))
+	questionGroup.POST("", questionController.CreateQuestionController, middleware.AuthMiddleware("Teacher"))
 	questionGroup.GET("/:id", questionController.GetQuestionByIdController)
 	questionGroup.GET("", questionController.GetAllQuestionController)
-	questionGroup.PUT("/:id", questionController.UpdateQuestionController, middleware.AuthMiddleware("Guru"))
-	questionGroup.DELETE("/:id", questionController.DeleteQuestionController, middleware.AuthMiddleware("Guru"))
+	questionGroup.PUT("/:id", questionController.UpdateQuestionController, middleware.AuthMiddleware("Teacher"))
+	questionGroup.DELETE("/:id", questionController.DeleteQuestionController, middleware.AuthMiddleware("Teacher"))
 
 }

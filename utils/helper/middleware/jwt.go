@@ -7,14 +7,14 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-func GenerateTokenSiswa(StudentID uint) (string, error) {
+func GenerateTokenStudent(StudentID uint) (string, error) {
 	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 
 	claims := jwt.MapClaims{
 		"sub":  StudentID,
 		"exp":  time.Now().Add(time.Hour * 1).Unix(),
 		"iat":  time.Now().Unix(),
-		"role": "Siswa",
+		"role": "Student",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -26,14 +26,14 @@ func GenerateTokenSiswa(StudentID uint) (string, error) {
 	return tokenString, nil
 }
 
-func GenerateTokenGuru(TeacherID uint) (string, error) {
+func GenerateTokenTeacher(TeacherID uint) (string, error) {
 	jwtSecret := []byte(os.Getenv("JWT_SECRET"))
 
 	claims := jwt.MapClaims{
 		"sub":  TeacherID,
 		"exp":  time.Now().Add(time.Hour * 1).Unix(),
 		"iat":  time.Now().Unix(),
-		"role": "Guru",
+		"role": "Teacher",
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

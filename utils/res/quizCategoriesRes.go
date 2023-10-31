@@ -15,6 +15,7 @@ func QuizCategorySchemaToQuizCategoryDomain(quizCategory *schema.QuizCategory) *
 
 func QuizCategoryDomainToQuizCategoryResponse(quizCategory *domain.QuizCategory) web.QuizCategoryResponse {
 	return web.QuizCategoryResponse{
+		ID:       quizCategory.ID,
 		Category: quizCategory.Category,
 	}
 }
@@ -23,6 +24,7 @@ func ConvertQuizCategoryResponse(quizCategory []domain.QuizCategory) []web.QuizC
 	var results []web.QuizCategoryResponse
 	for _, quizCategory := range quizCategory {
 		quizCategoryResponse := web.QuizCategoryResponse{
+			ID:       quizCategory.ID,
 			Category: quizCategory.Category,
 		}
 		results = append(results, quizCategoryResponse)

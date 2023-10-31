@@ -19,7 +19,6 @@ type StudentController interface {
 	UpdateStudentController(ctx echo.Context) error
 	GetStudentController(ctx echo.Context) error
 	GetStudentsController(ctx echo.Context) error
-	GetStudentByNameController(ctx echo.Context) error
 	DeleteStudentController(ctx echo.Context) error
 }
 
@@ -78,7 +77,7 @@ func (c *StudentControllerImpl) LoginStudentController(ctx echo.Context) error {
 
 	studentLoginResponse := res.StudentDomainToStudentLoginResponse(response)
 
-	token, err := middleware.GenerateTokenSiswa(response.ID)
+	token, err := middleware.GenerateTokenStudent(response.ID)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Generate JWT Error"))
 	}
@@ -100,7 +99,7 @@ func (c *StudentControllerImpl) GetStudentController(ctx echo.Context) error {
 			return ctx.JSON(http.StatusNotFound, helper.ErrorResponse("Students Not Found"))
 		}
 
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Get All Students Data Error"))
+		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Get Student By ID Error"))
 	}
 
 	response := res.StudentDomainToStudentResponse(result)
@@ -121,23 +120,6 @@ func (c *StudentControllerImpl) GetStudentsController(ctx echo.Context) error {
 	response := res.ConvertStudentResponse(result)
 
 	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get All Students Data", response))
-}
-
-func (c *StudentControllerImpl) GetStudentByNameController(ctx echo.Context) error {
-	studentName := ctx.Param("username")
-
-	result, err := c.StudentService.FindByName(ctx, studentName)
-	if err != nil {
-		if strings.Contains(err.Error(), "Student Not Found") {
-			return ctx.JSON(http.StatusNotFound, helper.ErrorResponse("Student Not Found"))
-		}
-
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Get Student Data By Name Error"))
-	}
-
-	response := res.StudentDomainToStudentResponse(result)
-
-	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get Student Data By Name", response))
 }
 
 func (c *StudentControllerImpl) UpdateStudentController(ctx echo.Context) error {

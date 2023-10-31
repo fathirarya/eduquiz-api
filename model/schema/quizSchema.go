@@ -10,4 +10,5 @@ type Quiz struct {
 	QuizCategory   QuizCategory `gorm:"foreignkey:QuizCategoryID"`
 	Title          string       `gorm:"type:varchar(255);not null"`
 	Description    string       `gorm:"type:varchar(255);not null"`
+	QuizResults    []QuizResult `gorm:"foreignKey:QuizID"`
 }

@@ -22,11 +22,11 @@ func QuizRoutes(e *echo.Echo, db *gorm.DB, validate *validator.Validate) {
 
 	quizGroup.Use(echojwt.JWT([]byte(os.Getenv("JWT_SECRET"))))
 
-	quizGroup.POST("", quizController.CreateQuizController, middleware.AuthMiddleware("Guru"))
+	quizGroup.POST("", quizController.CreateQuizController, middleware.AuthMiddleware("Teacher"))
 	quizGroup.GET("/:id", quizController.GetQuizByIdController)
 	quizGroup.GET("", quizController.GetAllQuizController)
-	quizGroup.GET("/", quizController.GetQuizByTitleController, middleware.AuthMiddleware("Guru"))
-	quizGroup.PUT("/:id", quizController.UpdateQuizController, middleware.AuthMiddleware("Guru"))
-	quizGroup.DELETE("/:id", quizController.DeleteQuizController, middleware.AuthMiddleware("Guru"))
+	quizGroup.GET("/", quizController.GetQuizByTitleController, middleware.AuthMiddleware("Teacher"))
+	quizGroup.PUT("/:id", quizController.UpdateQuizController, middleware.AuthMiddleware("Teacher"))
+	quizGroup.DELETE("/:id", quizController.DeleteQuizController, middleware.AuthMiddleware("Teacher"))
 
 }

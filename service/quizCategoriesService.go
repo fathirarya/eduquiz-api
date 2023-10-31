@@ -41,9 +41,9 @@ func (service *QuizCategoryServiceImpl) CreateQuizCategory(ctx echo.Context, req
 	if existingQuizCategory != nil {
 		return nil, fmt.Errorf("Category Already Exist")
 	}
-	fmt.Println(request)
+
 	quizCategory := req.QuizCategoryCreateRequestToQuizCategoryDomain(request)
-	fmt.Println(quizCategory)
+
 	result, err := service.QuizCategoryRepository.Create(quizCategory)
 	if err != nil {
 		return nil, fmt.Errorf("Error when creating QuizCategory: %s", err.Error())
