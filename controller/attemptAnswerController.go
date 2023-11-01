@@ -87,5 +87,5 @@ func (c *AttemptAnswerControllerImpl) GetAllAttemptAnswerController(ctx echo.Con
 
 	response := res.ConvertAttemptAnswerResponse(result)
 
-	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get Answer", response))
+	return ctx.JSON(http.StatusOK, helper.SuccessResponse("Successfully Get All Answer", response))
 }
