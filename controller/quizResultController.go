@@ -41,16 +41,16 @@ func (c *QuizResultControllerImpl) CreateQuizResultController(ctx echo.Context) 
 
 		}
 
-		if strings.Contains(err.Error(), "Question Already Exist") {
-			return ctx.JSON(http.StatusConflict, helper.ErrorResponse("Question Already Exist"))
+		if strings.Contains(err.Error(), "Quiz Result Already Exist") {
+			return ctx.JSON(http.StatusConflict, helper.ErrorResponse("Quiz Result Exist"))
 
 		}
 
-		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Question Error"))
+		return ctx.JSON(http.StatusInternalServerError, helper.ErrorResponse("Quiz Result Error"))
 	}
 
 	response := res.QuizResultDomainToQuizResultResponse(quizResults)
 
-	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Create Question", response))
+	return ctx.JSON(http.StatusCreated, helper.SuccessResponse("Successfully Show Quiz Result", response))
 
 }
