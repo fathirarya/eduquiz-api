@@ -50,3 +50,7 @@ go mod tidy
 
 ![ERD](./docs/ERD-EduQuiz.png)
 [View Full](https://app.eraser.io/workspace/T2GFx7zsVfxDPleyu3jJ?origin=share)
+
+## API Documentation
+
+Explore EduQUiz API using our [Postman Documentation](https://documenter.getpostman.com/view/30637751/2s9YXccQ4Y).
